@@ -25,7 +25,6 @@ public class Member {
 
 	@Builder
 	public Member(String memberID, String password, String nickname) {
-		super();
 		this.memberID = memberID;
 		this.password = password;
 		this.nickname = nickname;

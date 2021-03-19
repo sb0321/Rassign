@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,9 +46,9 @@ public class RootConfig {
         
 
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-		properties.setProperty("hibernate.show_sql", "true");
-		properties.setProperty("hibernate.hbm2ddl.auto", "create");
+		properties.setProperty(Environment.DIALECT, "org.hibernate.dialect.H2Dialect");
+		properties.setProperty(Environment.SHOW_SQL, "true");
+		properties.setProperty(Environment.HBM2DDL_AUTO, "validate");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);

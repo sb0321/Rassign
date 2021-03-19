@@ -1,5 +1,9 @@
 package org.rsupport.persistence.repository;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -31,6 +35,24 @@ public class BoardRepositoryTests {
 				.build();
 		
 		boardRepository.save(board);
+	}
+	
+	@Test
+	public void testFindByBoardID() {
+		
+		Board board = Board
+				.builder()
+				.title("testTitle")
+				.content("board content")
+				.build();
+		
+		boardRepository.save(board);
+		
+		Optional<Board> get = boardRepository.findByBoardID(board.getBoardID());
+		
+		assertEquals(get.isEmpty(), false);
+		
+		assertEquals(get.get().getTitle(), board.getTitle());
 	}
 
 }
