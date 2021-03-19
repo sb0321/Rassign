@@ -13,49 +13,48 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.rsupport.config.RootConfig;
-import com.rsupport.domain.member.Member;
-import com.rsupport.domain.member.MemberRepository;
+import com.rsupport.domain.file.File;
+import com.rsupport.domain.file.FileRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {RootConfig.class})
 @Transactional
-public class MemberRepositoryTests {
+public class FileRepositoryTests {
 	
 	@Autowired
-	private MemberRepository memberRepository;
-
+	private FileRepository fileRepository;
 	
 	@Test
-	public void testInsertMember() {
+	public void testInsertFile() {
 		
-		Member member = Member
+		File file = File
 				.builder()
-				.memberID("test")
-				.password("password")
-				.nickname("nickname")
+				.originalName("originalName")
+				.path("path")
+				.UUID("UUID")
 				.build();
 		
-		memberRepository.save(member);
-		
+		fileRepository.save(file);
 	}
 	
 	@Test
-	public void testFindByMemberID() {
+	public void testFindFile() {
 		
-		Member member = Member
+		File file = File
 				.builder()
-				.memberID("test1")
-				.password("password1")
-				.nickname("nickname1")
+				.originalName("originalName")
+				.path("path")
+				.UUID("UUID")
 				.build();
 		
-		memberRepository.save(member);
+		fileRepository.save(file);
 		
-		Optional<Member> get = memberRepository.findByMemberID(member.getMemberID());
+		Optional<File> get = fileRepository.findByFileID(file.getFileID());
 		
 		assertEquals(get.isEmpty(), false);
-
 		
-		assertEquals(member.getNickname(), get.get().getNickname());
+		assertEquals(file, get.get());
+		
 	}
+
 }

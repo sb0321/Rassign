@@ -36,8 +36,9 @@ CREATE TABLE WRITE (
 );
 
 CREATE TABLE SAVE (
-	boardID bigint,
-	fileID bigint,
+	saveID bigint NOT NULL AUTO_INCREMENT,
+	boardID bigint NOT NULL,
+	fileID bigint NOT NULL,
 	
 	FOREIGN KEY (boardID)
 	REFERENCES BOARD(boardID) on UPDATE CASCADE,
