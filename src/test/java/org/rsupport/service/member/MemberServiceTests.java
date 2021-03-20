@@ -1,4 +1,4 @@
-package org.rsupport.service;
+package org.rsupport.service.member;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

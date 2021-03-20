@@ -16,6 +16,9 @@ import com.rsupport.config.RootConfig;
 import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardRepository;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {RootConfig.class})
 @Transactional
@@ -53,6 +56,24 @@ public class BoardRepositoryTests {
 		assertEquals(get.isEmpty(), false);
 		
 		assertEquals(get.get().getTitle(), board.getTitle());
+	}
+	
+	@Test
+	public void testDeleteByBoardID() {
+		
+		Board board = Board
+				.builder()
+				.title("testTitle")
+				.content("board content")
+				.build();
+		
+		Long boardID = boardRepository.save(board).getBoardID();
+		
+		assertEquals(1, boardRepository.findAll().size());
+		
+		log.info(boardRepository.deleteByBoardID(boardID) + "------------------------");
+			
+		assertEquals(0, boardRepository.findAll().size());
 	}
 
 }
