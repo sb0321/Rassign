@@ -30,20 +30,18 @@ var main = {
             url:"/register/check",
             async:false,
             data: {
-                "name" : $('#name').val()
+                "memberID" : $('#name').val()
             },
 
             success:function(data) {
                 notExist = data;
             },
             error:function(data) {
-                notExist = data;
+                alert("error");
             }
         });
 
-        console.log(notExist);
-
-        if(!notExist) {
+        if(notExist == 'false') {
             $('#duchk-btn').prop("disabled", true);
             $('div').remove(".msg");
             $('#register-form').after(successComment);
@@ -63,7 +61,7 @@ var main = {
             type:"POST",
             url:"/register",
             data: {
-                "name" : $('#name').val(),
+                "memberID" : $('#name').val(),
                 "password" : $('#password').val()
             },
 

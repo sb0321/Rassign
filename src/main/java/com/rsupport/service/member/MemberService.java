@@ -10,6 +10,8 @@ public interface MemberService {
 	
 	MemberDTO findByMemberID(String memberID);
 	
+	boolean existByMemberID(String memberID);
+	
 	void saveMember(MemberDTO newMember);
 	
 	boolean updateMember(MemberDTO update);

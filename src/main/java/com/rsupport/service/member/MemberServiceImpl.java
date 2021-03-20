@@ -43,6 +43,12 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
 	}
 	
 	@Override
+	public boolean existByMemberID(String memberID) {
+		// TODO Auto-generated method stub
+		return memberRepository.exists(memberID);
+	}
+	
+	@Override
 	@Transactional
 	public boolean updateMember(MemberDTO update) {
 		// TODO Auto-generated method stub

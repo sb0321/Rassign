@@ -12,12 +12,12 @@
         <button type="button" name="duplicate-check" id="duchk-btn">중복 체크</button>
 
         <label for="name">비밀번호</label>
-        <input type="text" name="name" value="" id="password">
+        <input type="text" name="password" value="" id="password">
 
         <button type="button" id="reg-btn" disabled>회원가입</button>
         </form>
     </body>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="/static/js/register.js"></script>
+    <script src="static/js/register.js"></script>
 </html>
