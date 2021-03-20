@@ -51,7 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
-		auth.inMemoryAuthentication().withUser("test").password("test").roles("MEMBER");
+//		테스트용 계정
+//		auth.inMemoryAuthentication().withUser("test").password("test").roles("MEMBER");
 		
 	}
 

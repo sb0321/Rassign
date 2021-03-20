@@ -34,7 +34,6 @@ public class RootConfig {
 	    EmbeddedDatabase db = builder
 	    		.setType(EmbeddedDatabaseType.H2)
 	    		.addScript("classpath:db/init.sql")
-	    		.addScript("classpath:db/addParameter.sql")
 	    		.build();
 		
 		return db;

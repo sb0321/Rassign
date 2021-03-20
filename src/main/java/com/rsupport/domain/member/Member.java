@@ -38,5 +38,18 @@ public class Member {
 		this.nickname = nickname;
 	}
 	
+	public void update(String password, String nickname) {
+		this.password = password;
+		this.nickname = nickname;
+	}
+	
+	public void updatePassword(String password) {
+		this.password = password;
+	}
+	
+	public void updateNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	
 
 }
