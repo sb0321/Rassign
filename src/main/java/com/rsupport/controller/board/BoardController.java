@@ -2,16 +2,16 @@ package com.rsupport.controller.board;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/board/*")
 public class BoardController {
 
-	@GetMapping("/test")
+	@GetMapping("/board")
 	public String test() {
 		
-		return "board/NewFile";
+		System.out.println("ddddddd");
+		
+		return "board/boardList";
 	}
 	
 }

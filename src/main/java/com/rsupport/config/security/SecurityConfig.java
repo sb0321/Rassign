@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/board/**")
 				.hasAuthority("MEMBER")
-				.antMatchers("/auth").permitAll()
+				.antMatchers("/auth", "/accessError").permitAll()
 			.and()
 				.sessionManagement()
 				.maximumSessions(10)
@@ -73,7 +73,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
-//		테스트용 계정
 		auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
 		
 	}

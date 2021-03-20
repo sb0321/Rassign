@@ -1,14 +1,14 @@
 package com.rsupport.controller.error;
 
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@ControllerAdvice
+@Controller
 public class ErrorController {
 
-	@ExceptionHandler(Exception.class)
-	public String exception() {
-		
+	
+	@GetMapping("/accessError")
+	public String accessDenied() {
 		return "error/accessError";
 	}
 }
