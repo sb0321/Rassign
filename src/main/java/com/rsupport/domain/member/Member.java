@@ -1,8 +1,13 @@
 package com.rsupport.domain.member;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.rsupport.domain.write.Write;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +27,9 @@ public class Member {
 	
 	@Column(name = "nickname")
 	private String nickname;
+	
+	@OneToMany(mappedBy = "member")
+	private List<Write> writes;
 
 	@Builder
 	public Member(String memberID, String password, String nickname) {

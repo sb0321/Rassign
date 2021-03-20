@@ -29,9 +29,10 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 		// TODO Auto-generated method stub
-		
 		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
 	}
+	
+	
 	
 	
 

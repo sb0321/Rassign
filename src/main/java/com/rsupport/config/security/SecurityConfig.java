@@ -1,5 +1,6 @@
 package com.rsupport.config.security;
 
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,10 +25,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.and()
 				.exceptionHandling()
-				.accessDeniedPage("/accessDenied")
+				.accessDeniedPage("/accessError")
 			.and()
 				.formLogin()
-				.failureUrl("/loginfailed")
+				.loginPage("/login")                
+				.loginProcessingUrl("/auth")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/board")
 			.and()
 				.logout()
 				.logoutUrl("/logout")
@@ -35,14 +40,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.invalidateHttpSession(true);
 	}
 
+
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// TODO Auto-generated method stub
 		web.ignoring().antMatchers("/css/**", "/js/**");
 	}
-	
-	
-	
-	
+
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		// TODO Auto-generated method stub
+		auth.inMemoryAuthentication().withUser("test").password("test").roles("MEMBER");
+		
+	}
 
 }

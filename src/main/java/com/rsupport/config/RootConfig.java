@@ -20,6 +20,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.rsupport.domain")
@@ -68,6 +69,17 @@ public class RootConfig {
       JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
       jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
       return jpaTransactionManager;
+    }
+    
+    
+    @Bean
+    // 한글 설정
+    public CharacterEncodingFilter characterEncodingFilter() {
+    	CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+        return characterEncodingFilter;
+
     }
 
 }
