@@ -28,6 +28,19 @@ public class MemberServiceImpl implements MemberService {
 	private final MemberRepository memberRepository;
 	
 	@Override
+	public Member findByMemberIDEntity(String memberID) {
+		// TODO Auto-generated method stub
+
+		Optional<Member> optionalMember = memberRepository.findByMemberID(memberID);
+		
+		if(optionalMember.isEmpty()) {
+			return null;
+		}
+		
+		return optionalMember.get();
+	}
+	
+	@Override
 	@Transactional
 	public void saveMember(MemberDTO newMember) {
 		// TODO Auto-generated method stub

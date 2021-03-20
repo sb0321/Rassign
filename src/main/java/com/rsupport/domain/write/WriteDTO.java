@@ -2,23 +2,25 @@ package com.rsupport.domain.write;
 
 import java.util.Date;
 
-import com.rsupport.domain.board.Board;
+import com.rsupport.domain.board.BoardDTO;
 import com.rsupport.domain.member.MemberDTO;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class WriteDTO {
 
 	private Long writeID;
 	private MemberDTO member;
-	private Board board;
+	private BoardDTO board;
 	private Date createdDate;
 	private Date updatedDate;
 	
 	@Builder
-	public WriteDTO(Long writeID, MemberDTO member, Board board, Date createdDate, Date updatedDate) {
+	public WriteDTO(Long writeID, MemberDTO member, BoardDTO board, Date createdDate, Date updatedDate) {
 		super();
 		this.writeID = writeID;
 		this.member = member;
@@ -27,6 +29,4 @@ public class WriteDTO {
 		this.updatedDate = updatedDate;
 	}
 	
-	
-
 }

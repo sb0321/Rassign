@@ -2,8 +2,10 @@ package com.rsupport.domain.board;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class BoardDTO {
 
 	private Long boardID;

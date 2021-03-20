@@ -1,4 +1,4 @@
-package org.rsupport.service.board;
+package org.rsupport.service;
 
 import static org.junit.Assert.assertEquals;
 

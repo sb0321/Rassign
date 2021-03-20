@@ -2,8 +2,10 @@ package com.rsupport.domain.member;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class MemberDTO {
 	
 	private String memberID;
