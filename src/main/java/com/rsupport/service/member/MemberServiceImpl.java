@@ -10,8 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.rsupport.domain.member.Member;
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService, UserDetailsService {
+public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
 	
@@ -32,10 +32,15 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
 	public void saveMember(MemberDTO newMember) {
 		// TODO Auto-generated method stub
 		
+		// 비밀번호 암호화
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        
+		String encryptedPassword = passwordEncoder.encode(newMember.getPassword());
+		
 		Member member = Member
 				.builder()
 				.memberID(newMember.getMemberID())
-				.password(newMember.getPassword())
+				.password(encryptedPassword)
 				.nickname(newMember.getNickname())
 				.build();
 		
@@ -121,6 +126,7 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
 	}
 	
 	@Override
+	@Transactional
 	public boolean deleteMember(MemberDTO delMember) {
 		// TODO Auto-generated method stub
 		

@@ -2,9 +2,11 @@ package com.rsupport.service.member;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.rsupport.domain.member.MemberDTO;
 
-public interface MemberService {
+public interface MemberService extends UserDetailsService {
 	
 	List<MemberDTO> findAll();
 	

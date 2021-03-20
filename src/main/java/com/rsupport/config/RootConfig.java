@@ -18,7 +18,6 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
@@ -70,7 +69,6 @@ public class RootConfig {
       return jpaTransactionManager;
     }
     
-    
     @Bean
     // 한글 설정
     public CharacterEncodingFilter characterEncodingFilter() {
@@ -80,5 +78,4 @@ public class RootConfig {
         return characterEncodingFilter;
 
     }
-
 }

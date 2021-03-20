@@ -1,13 +1,28 @@
 package com.rsupport.config.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.rsupport.service.member.MemberService;
+
+@Configuration
 @EnableWebSecurity
+@ComponentScan(basePackages = {"com.rsupport.service"})
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Autowired
+	MemberService memberService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -17,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/board/**")
-				.hasRole("MEMBER")
+				.hasAuthority("MEMBER")
+				.antMatchers("/auth").permitAll()
 			.and()
 				.sessionManagement()
 				.maximumSessions(10)
@@ -28,11 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.accessDeniedPage("/accessError")
 			.and()
 				.formLogin()
-				.loginPage("/login")                
+				.loginPage("/login")
 				.loginProcessingUrl("/auth")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/board")
+                .defaultSuccessUrl("/")
+                .failureUrl("/register")
 			.and()
 				.logout()
 				.logoutUrl("/logout")
@@ -46,13 +63,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// TODO Auto-generated method stub
 		web.ignoring().antMatchers("/css/**", "/js/**");
 	}
+	
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
 //		테스트용 계정
-//		auth.inMemoryAuthentication().withUser("test").password("test").roles("MEMBER");
+		auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
 		
 	}
 

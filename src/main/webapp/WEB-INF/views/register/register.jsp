@@ -7,12 +7,15 @@
     </head>
     <body>
         <form method="post" id="register-form">
-        <label for="name">이름</label>
+        <label for="name">아이디</label>
         <input type="text" name="name" value="" id="name">
         <button type="button" name="duplicate-check" id="duchk-btn">중복 체크</button>
 
         <label for="name">비밀번호</label>
-        <input type="text" name="password" value="" id="password">
+        <input type="password" name="password" value="" id="password">
+        
+        <label for="nickname">닉네임</label>
+        <input type="text" name="nickname" id="nickname">
 
         <button type="button" id="reg-btn" disabled>회원가입</button>
         </form>

@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import javax.transaction.Transactional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,8 +24,6 @@ import com.rsupport.config.RootConfig;
 import com.rsupport.config.ServletConfig;
 import com.rsupport.domain.member.Member;
 import com.rsupport.domain.member.MemberRepository;
-
-import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -44,6 +44,7 @@ public class RegisterAPIControllerTests {
 	}
 	
 	@Test
+	@Transactional
 	public void testRegisterUserCheck() throws Exception {
 		
 		// 중복된 아이디가 없을 때
@@ -57,7 +58,6 @@ public class RegisterAPIControllerTests {
 		Boolean success = new ObjectMapper().readValue(json, Boolean.class);
 		
 		assertEquals(false, success);
-		
 		
 		MemberRepository.save(Member
 				.builder()
@@ -77,6 +77,22 @@ public class RegisterAPIControllerTests {
 		success = new ObjectMapper().readValue(json, Boolean.class);
 		
 		assertEquals(true, success);
+	}
+	
+	@Test
+	@Transactional
+	public void testRegisterMember() throws Exception {
+		
+		mockMvc.perform(post("/register")
+				.param("memberID", "test")
+				.param("password", "password")
+				.param("nickname", "nickname"))
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andReturn();
+		
+		assertEquals(true, MemberRepository.exists("test"));
+		
 	}
 	
 	

@@ -33,7 +33,7 @@ public class Member {
 
 	@Builder
 	public Member(String memberID, String password, String nickname) {
-		this.memberID = memberID;
+		this.memberID =  memberID;
 		this.password = password;
 		this.nickname = nickname;
 	}

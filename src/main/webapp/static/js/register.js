@@ -9,7 +9,7 @@ var main = {
         });
 
         $('#reg-btn').on('click', function() {
-            _this.registerUser();
+            _this.registerMember();
         });
 
         $('#name').on("propertychange change keyup paste input", function() {
@@ -55,14 +55,15 @@ var main = {
 
     },
 
-    registerUser : function() {
+    registerMember : function() {
 
         $.ajax({
             type:"POST",
             url:"/register",
             data: {
                 "memberID" : $('#name').val(),
-                "password" : $('#password').val()
+                "password" : $('#password').val(),
+                "nickname" : $('#nickname').val()
             },
 
             success:function(data) {
