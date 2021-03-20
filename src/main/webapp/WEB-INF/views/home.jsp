@@ -14,9 +14,9 @@
 		        <button type="button" id="register-btn">회원가입</button>
 		    </div>
 	    </c:if>
-	    <c:if test="${member}">
-	        <p>{{user.username}}님 환영합니다.</p>
-	        <button type="button" id="folder-btn">내 폴더로 가기</button>
+	    <c:if test="${!empty member}">
+	        <p>${member.username}님 환영합니다.</p>
+	        <button type="button" id="board-btn">공지사항으로 가기</button>
 	        <button type="button" id="logout-btn">로그아웃</button>
 	    </c:if>
 	</body>

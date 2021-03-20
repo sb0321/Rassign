@@ -3,8 +3,11 @@ package com.rsupport.service.board;
 import java.util.List;
 
 import com.rsupport.domain.board.BoardDTO;
+import com.rsupport.domain.board.BoardVO;
 
 public interface BoardService {
+	
+	List<BoardVO> findAllVOList();
 	
 	List<BoardDTO> findAll();
 	

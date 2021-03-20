@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import com.rsupport.domain.write.Write;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -27,6 +30,9 @@ public class Board {
 	
 	@Column(name = "content")
 	private String content;
+	
+	@OneToOne(mappedBy = "board")
+	private Write write;
 	
 	@Builder
 	public Board(String title, String content) {

@@ -10,8 +10,8 @@ var main = {
             window.location.href='/register';
         });
 
-        $('#folder-btn').on('click', function() {
-            window.location.href='/myfolder';
+        $('#board-btn').on('click', function() {
+            window.location.href='/board';
         });
 
         $('#logout-btn').on('click', function() {

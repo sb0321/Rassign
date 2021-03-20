@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/board/**")
-				.hasAuthority("MEMBER")
+				.hasRole("MEMBER")
 				.antMatchers("/auth", "/accessError").permitAll()
 			.and()
 				.sessionManagement()

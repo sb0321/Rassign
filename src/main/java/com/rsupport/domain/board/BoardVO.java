@@ -8,16 +8,17 @@ import lombok.Getter;
 @Getter
 public class BoardVO {
 
+	private Long boardID;
 	private String memberID; 
 	private String title;
 	private Date updatedDate;
 	
 	@Builder
-	public BoardVO(String memberID, String title, Date updatedDate) {
+	public BoardVO(Long boardID, String memberID, String title, Date updatedDate) {
+		super();
+		this.boardID = boardID;
 		this.memberID = memberID;
 		this.title = title;
 		this.updatedDate = updatedDate;
 	}
-	
-	
 }

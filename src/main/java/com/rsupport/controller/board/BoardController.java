@@ -1,12 +1,13 @@
 package com.rsupport.controller.board;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.rsupport.domain.board.BoardVO;
 import com.rsupport.service.board.BoardService;
-import com.rsupport.service.member.MemberService;
-import com.rsupport.service.write.WriteService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,15 +16,21 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	
 	private final BoardService boardService;
-	private final MemberService memberService;
-	private final WriteService writeService;
 	
 	@GetMapping("/board")
 	public String boardList(Model model) {
 		
+		List<BoardVO> boardList = boardService.findAllVOList();
 		
+		model.addAttribute("boardList", boardList);
 		
-		return null;
+		return "board/boardList";
+	}
+	
+	@GetMapping("/board/create")
+	public String createBoard() {
+		
+		return "board/createBoard";
 	}
 	
 }

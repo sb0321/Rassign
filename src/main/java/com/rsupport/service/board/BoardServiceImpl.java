@@ -1,5 +1,6 @@
 package com.rsupport.service.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardDTO;
 import com.rsupport.domain.board.BoardRepository;
+import com.rsupport.domain.board.BoardVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +21,29 @@ import lombok.RequiredArgsConstructor;
 public class BoardServiceImpl implements BoardService {
 	
 	private final BoardRepository boardRepository;
+	
+	@Override
+	public List<BoardVO> findAllVOList() {
+		
+		List<Board> boardList = boardRepository.findAll();
+		
+		List<BoardVO> result = new ArrayList<>();
+		
+		for(Board board : boardList) {
+			
+			BoardVO vo = BoardVO
+					.builder()
+					.memberID(board.getWrite().getMember().getMemberID())
+					.title(board.getTitle())
+					.updatedDate(board.getWrite().getUpdatedDate())
+					.boardID(board.getBoardID())
+					.build();
+			
+			result.add(vo);
+		}
+		
+		return result;
+	}
 
 	@Override
 	public List<BoardDTO> findAll() {
