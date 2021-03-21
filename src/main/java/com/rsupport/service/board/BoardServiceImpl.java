@@ -11,17 +11,19 @@ import org.springframework.stereotype.Service;
 
 import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardDTO;
+import com.rsupport.domain.board.BoardDetailVO;
 import com.rsupport.domain.board.BoardRepository;
 import com.rsupport.domain.board.BoardVO;
+import com.rsupport.domain.file.File;
+import com.rsupport.domain.file.FileVO;
 import com.rsupport.domain.member.Member;
-import com.rsupport.domain.member.MemberDTO;
-import com.rsupport.domain.member.MemberRepository;
+import com.rsupport.domain.save.Save;
 import com.rsupport.domain.write.Write;
-import com.rsupport.service.member.MemberService;
-import com.rsupport.service.write.WriteService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
@@ -106,7 +108,6 @@ public class BoardServiceImpl implements BoardService {
 				.build();
 		
 		return boardRepository.save(board);
-		
 	}
 
 	@Override
@@ -132,6 +133,54 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		
 		return boardRepository.deleteByBoardID(boardID);
+	}
+
+	@Override
+	@Transactional
+	public BoardDetailVO getBoardDetail(Long boardID) {
+		// TODO Auto-generated method stub
+		
+		Optional<Board> optionalBoard = boardRepository.findByBoardID(boardID);
+		
+		if(optionalBoard.isEmpty()) {
+			return null;
+		}
+		
+		Board board = optionalBoard.get();
+		
+		Write write = board.getWrite();
+		
+		Member member = write.getMember();
+		
+		List<Save> saveList = board.getSaves();
+		
+		List<FileVO> voList = new ArrayList<>();
+		for(Save save : saveList) {
+			
+			File file = save.getFile();
+			
+			FileVO vo = FileVO
+					.builder()
+					.originalName(file.getOriginalName())
+					.UUID(file.getUUID())
+					.fileID(file.getFileID())
+					.build();
+			
+			voList.add(vo);
+		}
+		System.out.println("222222");
+		BoardDetailVO vo = BoardDetailVO
+				.builder()
+				.boardID(boardID)
+				.memberID(member.getMemberID())
+				.updatedDate(write.getUpdatedDate())
+				.createdDate(write.getCreatedDate())
+				.content(board.getContent())
+				.files(voList)
+				.title(board.getTitle())
+				.build();
+		
+		return vo;
 	}
 
 }

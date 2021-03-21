@@ -1,7 +1,6 @@
 package com.rsupport.domain.write;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +34,7 @@ public class Write {
 	@JoinColumn(name = "memberID")
 	private Member member;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "boardID")
 	private Board board;
 	

@@ -1,5 +1,7 @@
 package org.rsupport.service;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.rsupport.config.RootConfig;
 import com.rsupport.config.ServletConfig;
+import com.rsupport.domain.file.File;
 import com.rsupport.domain.file.FileRepository;
 import com.rsupport.service.file.FileService;
 
@@ -26,10 +29,5 @@ public class FileServiceTests {
 	@Autowired
 	private FileRepository fileRepository;
 	
-	
-	@Test
-	public void testSaveFile() {
-		
-	}
 
 }

@@ -2,7 +2,6 @@ package com.rsupport.controller.board;
 
 import java.util.List;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +35,9 @@ public class BoardAPIController {
 		
 		System.out.println(title + " " + content);
 		
+		String memberID = SecurityContextHolder
+				.getContext().getAuthentication().getName();
+		
 		// 공지사항 저장
 		BoardDTO dto = BoardDTO
 				.builder()
@@ -43,12 +45,11 @@ public class BoardAPIController {
 				.content(content)
 				.build();
 		
+		// 멤버 가져오기
+		Member member = memberService.findByMemberIDEntity(memberID);
+		
 		// 보드를 저장
 		Board board = boardService.saveBoard(dto);
-		
-		// 멤버 가져오기
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Member member = memberService.findByMemberIDEntity(auth.getName());
 		
 		// write 저장
 		writeService.saveWrite(member, board);
@@ -56,8 +57,10 @@ public class BoardAPIController {
 		if(request.getFileNames().hasNext()) {
 			String files = request.getFileNames().next();
 			List<MultipartFile> mpf = request.getFiles(files);
-			fileService.saveFile(mpf);
+			fileService.saveFile(mpf, board);
 		}
 	}
+	
+	
 	
 }

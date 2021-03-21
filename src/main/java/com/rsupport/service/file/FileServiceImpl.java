@@ -1,14 +1,18 @@
 package com.rsupport.service.file;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.rsupport.domain.board.Board;
 import com.rsupport.domain.file.File;
 import com.rsupport.domain.file.FileRepository;
+import com.rsupport.service.save.SaveService;
 import com.rsupport.util.FileUtil;
 import com.rsupport.util.UUIDCreator;
 
@@ -20,8 +24,11 @@ public class FileServiceImpl implements FileService {
 
 	private final FileRepository fileRepository;
 	
+	private final SaveService saveService;
+	
 	@Override
-	public Long saveFile(List<MultipartFile> mpf) {
+	@Transactional
+	public void saveFile(List<MultipartFile> mpf, Board board) {
 		// TODO Auto-generated method stub
 		
 		List<File> files = new ArrayList<>();
@@ -46,9 +53,24 @@ public class FileServiceImpl implements FileService {
 			}
 		}
 		
-		fileRepository.save(files);
+		List<File> savedFileList = fileRepository.save(files);
 		
-		return 1L;
+		for(File savedFile : savedFileList) {
+			saveService.saveSave(savedFile, board);
+			System.out.println(savedFile.getOriginalName());
+		}
+	}
+
+	@Override
+	public File findByfileID(Long fileID) {
+		// TODO Auto-generated method stub
+		Optional<File> optionalFile = fileRepository.findByFileID(fileID);
+		
+		if(optionalFile.isEmpty()) {
+			return null;
+		}
+		
+		return optionalFile.get();
 	}
 
 }

@@ -2,7 +2,6 @@ package org.rsupport.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -19,6 +18,7 @@ import com.rsupport.config.RootConfig;
 import com.rsupport.config.ServletConfig;
 import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardDTO;
+import com.rsupport.domain.board.BoardDetailVO;
 import com.rsupport.domain.board.BoardRepository;
 import com.rsupport.domain.board.BoardVO;
 import com.rsupport.domain.member.Member;
@@ -63,6 +63,35 @@ public class BoardServiceTests {
 	}
 	
 	@Test
+	public void testGetBoardDetail() {
+		
+		Board board = Board
+				.builder()
+				.title("title")
+				.content("content")
+				.build();
+		
+		Board b = boardRepository.save(board);
+		
+		Member member = Member
+				.builder()
+				.memberID("testID")
+				.nickname("nickname")
+				.password("password")
+				.build();
+		
+		Member m = memberRepository.save(member);
+		
+		Write w = writeRepository.save(Write.builder().board(b).member(m).build());
+		
+		BoardDetailVO boardDetailVO = boardService.getBoardDetail(b.getBoardID());
+		
+		log.info(boardDetailVO);
+		
+	}
+	
+	@Test
+	@Transactional
 	public void testFindAll() {
 		
 		int boardCount = boardRepository.findAll().size();
@@ -188,16 +217,16 @@ public class BoardServiceTests {
 				.content("testContent")
 				.build();
 		
-		Board ba = boardRepository.save(board);
+		Board b = boardRepository.save(board);
 		
-		Write w = writeRepository.save(Write.builder().board(ba).member(m).build());
+		Write w = writeRepository.save(Write.builder().board(b).member(m).build());
 		
 		m.addWrite(w);
-		System.out.println(ba.toString() + " before");
+		b.setWrite(w);
+		
 		List<BoardVO> list = boardService.findAllVOList();
-
-		System.out.println(list.toString());
-		assertEquals(ba, m.getWrites().get(0).getBoard());
+		
+		log.info(list);
 	}
 
 }

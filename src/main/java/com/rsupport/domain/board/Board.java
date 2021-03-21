@@ -1,5 +1,6 @@
 package com.rsupport.domain.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -38,13 +39,18 @@ public class Board {
 	private String content;
 	
 	@OneToOne(mappedBy = "board")
+	@JoinColumn(name = "writeID")
 	private Write write;
 	
 	@OneToMany(mappedBy = "board")
-	private List<Save> saves;
+	private List<Save> saves = new ArrayList<>();
 	
 	public void setWrite(Write write) {
 		this.write = write;
+	}
+	
+	public void addSave(Save save) {
+		saves.add(save);
 	}
 	
 	@Builder

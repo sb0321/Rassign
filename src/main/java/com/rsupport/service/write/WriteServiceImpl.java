@@ -76,7 +76,12 @@ public class WriteServiceImpl implements WriteService {
 				.member(member)
 				.build();
 		
-		return writeRepository.save(write);
+		Write result = writeRepository.save(write);
+		
+		member.addWrite(result);
+		
+		
+		return result;
 	}
 
 	@Override

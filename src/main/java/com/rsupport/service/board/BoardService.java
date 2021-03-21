@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardDTO;
+import com.rsupport.domain.board.BoardDetailVO;
 import com.rsupport.domain.board.BoardVO;
+import com.rsupport.domain.member.Member;
 
 public interface BoardService {
 	
@@ -13,6 +15,8 @@ public interface BoardService {
 	List<BoardDTO> findAll();
 	
 	BoardDTO findByBoardID(Long boardID);
+	
+	BoardDetailVO getBoardDetail(Long boardID);
 	
 	Boolean existByboardID(Long boardrID);
 	

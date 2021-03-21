@@ -17,7 +17,6 @@ public class BoardVO {
 	
 	@Builder
 	public BoardVO(Long boardID, String memberID, String title, Date updatedDate) {
-		super();
 		this.boardID = boardID;
 		this.memberID = memberID;
 		this.title = title;

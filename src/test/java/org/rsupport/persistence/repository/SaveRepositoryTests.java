@@ -1,5 +1,7 @@
 package org.rsupport.persistence.repository;
 
+import static org.junit.Assert.assertEquals;
+
 import javax.transaction.Transactional;
 
 import org.junit.Before;
@@ -61,7 +63,15 @@ public class SaveRepositoryTests {
 				.file(fileRepository.findAll().get(0))
 				.build();
 		
-		saveRepository.save(save);
+		Save s = saveRepository.save(save);
+		
+		Board board = boardRepository.findAll().get(0);
+		board.addSave(s);
+		
+		assertEquals(boardRepository.findAll().get(0), save.getBoard());
+		assertEquals(fileRepository.findAll().get(0), save.getFile());
+		
+		assertEquals(fileRepository.findAll().get(0), boardRepository.findAll().get(0).getSaves().get(0).getFile());
 		
 	}
 

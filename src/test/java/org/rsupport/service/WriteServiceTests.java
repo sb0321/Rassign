@@ -119,7 +119,8 @@ public class WriteServiceTests {
 		
 		Long writeID = writeService.saveWrite(member, board).getWriteID();
 		
-		assertEquals(board.getBoardID(), writeRepository.findByWriteID(writeID).get().getBoard().getBoardID());
+		assertEquals(board, writeRepository.findByWriteID(writeID).get().getBoard());
+		assertEquals(member, writeRepository.findByWriteID(writeID).get().getMember());
 	}
 	
 	@Test
@@ -135,6 +136,7 @@ public class WriteServiceTests {
 		board.setWrite(w);
 		
 		assertEquals(member, board.getWrite().getMember());
+		assertEquals(board, member.getWrites().get(0).getBoard());
 	}
 
 }
