@@ -183,4 +183,16 @@ public class BoardServiceImpl implements BoardService {
 		return vo;
 	}
 
+	@Override
+	public Board findByBoardIDEntity(Long boardID) {
+		// TODO Auto-generated method stub
+		Optional<Board> optionalBoard = boardRepository.findByBoardID(boardID);
+		
+		if(optionalBoard.isEmpty()) {
+			return null;
+		}
+		
+		return optionalBoard.get();
+	}
+
 }

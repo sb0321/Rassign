@@ -117,10 +117,10 @@ public class WriteServiceTests {
 		Member member = memberRepository.findAll().get(0);
 		Board board = boardRepository.findAll().get(0);
 		
-		Long writeID = writeService.saveWrite(member, board).getWriteID();
-		
-		assertEquals(board, writeRepository.findByWriteID(writeID).get().getBoard());
-		assertEquals(member, writeRepository.findByWriteID(writeID).get().getMember());
+		Write write = writeService.saveWrite(member.getMemberID(), board.getBoardID());
+
+		assertEquals(board, memberRepository.findAll().get(0).getWrites().get(0).getBoard());
+		assertEquals(member, boardRepository.findAll().get(0).getWrite().getMember());
 	}
 	
 	@Test

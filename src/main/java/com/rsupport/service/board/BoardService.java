@@ -16,6 +16,8 @@ public interface BoardService {
 	
 	BoardDTO findByBoardID(Long boardID);
 	
+	Board findByBoardIDEntity(Long boardID);
+	
 	BoardDetailVO getBoardDetail(Long boardID);
 	
 	Boolean existByboardID(Long boardrID);

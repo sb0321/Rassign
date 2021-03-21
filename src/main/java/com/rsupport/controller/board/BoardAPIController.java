@@ -10,10 +10,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardDTO;
-import com.rsupport.domain.member.Member;
 import com.rsupport.service.board.BoardService;
 import com.rsupport.service.file.FileService;
-import com.rsupport.service.member.MemberService;
 import com.rsupport.service.write.WriteService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +23,6 @@ public class BoardAPIController {
 	private final BoardService boardService;
 	private final WriteService writeService;
 	private final FileService fileService;
-	private final MemberService memberService;
 	
 	@PostMapping("/board/create")
 	public void makeBoard(MultipartHttpServletRequest request) throws Exception {
@@ -38,6 +35,8 @@ public class BoardAPIController {
 		String memberID = SecurityContextHolder
 				.getContext().getAuthentication().getName();
 		
+		System.out.println(memberID);
+		
 		// 공지사항 저장
 		BoardDTO dto = BoardDTO
 				.builder()
@@ -45,14 +44,15 @@ public class BoardAPIController {
 				.content(content)
 				.build();
 		
-		// 멤버 가져오기
-		Member member = memberService.findByMemberIDEntity(memberID);
-		
 		// 보드를 저장
 		Board board = boardService.saveBoard(dto);
 		
+		System.out.println("before");
 		// write 저장
-		writeService.saveWrite(member, board);
+		writeService.saveWrite(memberID, board.getBoardID());
+		
+		System.out.println("after");
+		System.out.println(request);
 		
 		if(request.getFileNames().hasNext()) {
 			String files = request.getFileNames().next();

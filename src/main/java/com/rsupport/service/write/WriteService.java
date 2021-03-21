@@ -13,7 +13,7 @@ public interface WriteService {
 	
 	Write findByWriteID(Long writeID);
 	
-	Write saveWrite(Member member, Board board);
+	Write saveWrite(String memberID, Long boardID);
 	
 	Write findByBoard(Board board);
 

@@ -16,6 +16,8 @@ import com.rsupport.domain.member.MemberDTO;
 import com.rsupport.domain.write.Write;
 import com.rsupport.domain.write.WriteDTO;
 import com.rsupport.domain.write.WriteRepository;
+import com.rsupport.service.board.BoardService;
+import com.rsupport.service.member.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,10 @@ import lombok.RequiredArgsConstructor;
 public class WriteServiceImpl implements WriteService {
 
 	private final WriteRepository writeRepository;
+	
+	private final MemberService memberService;
+	
+	private final BoardService boardService;
 	
 	@Override
 	public List<WriteDTO> findByMember(Member member) {
@@ -67,8 +73,11 @@ public class WriteServiceImpl implements WriteService {
 
 	@Override
 	@Transactional
-	public Write saveWrite(Member member, Board board) {
+	public Write saveWrite(String memberID, Long boardID) {
 		// TODO Auto-generated method stub
+		
+		Member member = memberService.findByMemberIDEntity(memberID);
+		Board board = boardService.findByBoardIDEntity(boardID);
 		
 		Write write = Write
 				.builder()
@@ -79,7 +88,7 @@ public class WriteServiceImpl implements WriteService {
 		Write result = writeRepository.save(write);
 		
 		member.addWrite(result);
-		
+		board.setWrite(result);
 		
 		return result;
 	}
