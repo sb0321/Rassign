@@ -14,3 +14,7 @@
 - 게시글 작성
 - 파일 업로드 (미완성)
 - 게시글 조회
+
+# 데이터베이스 구현
+- ERD : https://www.erdcloud.com/d/kNb2CKG7LzJz69LjT
+- ![개념적 데이터베이스 설계](https://user-images.githubusercontent.com/33660224/111911261-2aac3600-8aa8-11eb-8ba3-1933d64678b9.png)
