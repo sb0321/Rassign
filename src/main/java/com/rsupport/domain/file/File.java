@@ -31,7 +31,6 @@ public class File {
 	
 	@Builder
 	public File(String path, String originalName, String UUID) {
-		super();
 		this.path = path;
 		this.originalName = originalName;
 		this.UUID = UUID;

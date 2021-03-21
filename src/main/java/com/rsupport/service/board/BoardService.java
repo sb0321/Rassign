@@ -2,6 +2,7 @@ package com.rsupport.service.board;
 
 import java.util.List;
 
+import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardDTO;
 import com.rsupport.domain.board.BoardVO;
 
@@ -15,7 +16,7 @@ public interface BoardService {
 	
 	Boolean existByboardID(Long boardrID);
 	
-	Long saveBoard(BoardDTO newBoard);
+	Board saveBoard(BoardDTO newBoard);
 	
 	Boolean updateBoard(BoardDTO update);
 	

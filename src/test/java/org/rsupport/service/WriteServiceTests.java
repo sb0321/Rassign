@@ -19,6 +19,7 @@ import com.rsupport.config.RootConfig;
 import com.rsupport.config.ServletConfig;
 import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardRepository;
+import com.rsupport.domain.board.BoardVO;
 import com.rsupport.domain.member.Member;
 import com.rsupport.domain.member.MemberRepository;
 import com.rsupport.domain.write.Write;
@@ -60,7 +61,7 @@ public class WriteServiceTests {
 				.build();
 		
 		memberRepository.save(member);
-		
+	
 		Board board = Board
 				.builder()
 				.title("testTitle")
@@ -73,14 +74,13 @@ public class WriteServiceTests {
 				.builder()
 				.board(board)
 				.member(member)
-				.createdDate(new Date())
-				.updatedDate(new Date())
 				.build();
 		
 		writeRepository.save(write);
 	}
 	
 	@Test
+	@Transactional
 	public void testFindByMember() {
 		
 		Member member = memberRepository.findByMemberID(MEMBER_ID).get();
@@ -93,6 +93,7 @@ public class WriteServiceTests {
 	}
 	
 	@Test
+	@Transactional
 	public void testFindByWriteID() {
 		
 		Member member = memberRepository.findAll().get(0);
@@ -102,8 +103,6 @@ public class WriteServiceTests {
 				.builder()
 				.board(board)
 				.member(member)
-				.createdDate(new Date())
-				.updatedDate(new Date())
 				.build();
 		
 		Long writeID = writeRepository.save(write).getWriteID();
@@ -112,14 +111,30 @@ public class WriteServiceTests {
 	}
 	
 	@Test
+	@Transactional
 	public void testSaveWrite() {
 		
 		Member member = memberRepository.findAll().get(0);
 		Board board = boardRepository.findAll().get(0);
 		
-		Long writeID = writeService.saveWrite(member, board);
+		Long writeID = writeService.saveWrite(member, board).getWriteID();
 		
-		assertEquals(writeID, writeRepository.findByWriteID(writeID).get().getWriteID());
+		assertEquals(board.getBoardID(), writeRepository.findByWriteID(writeID).get().getBoard().getBoardID());
+	}
+	
+	@Test
+	@Transactional
+	public void testFindByBoard() {
+		
+		Board board = boardRepository.findAll().get(0);
+		Member member = memberRepository.findAll().get(0);
+		
+		Write w = writeRepository.save(Write.builder().board(board).member(member).build());
+		
+		member.addWrite(w);
+		board.setWrite(w);
+		
+		assertEquals(member, board.getWrite().getMember());
 	}
 
 }

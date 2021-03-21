@@ -2,7 +2,7 @@ package org.rsupport.persistence.repository;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -22,6 +22,9 @@ import com.rsupport.domain.member.MemberRepository;
 import com.rsupport.domain.write.Write;
 import com.rsupport.domain.write.WriteRepository;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {RootConfig.class})
 @Transactional
@@ -65,11 +68,9 @@ public class WriteRepositoryTests {
 				.builder()
 				.board(boardRepository.findAll().get(0))
 				.member(memberRepository.findAll().get(0))
-				.createdDate(new Date())
-				.updatedDate(new Date())
 				.build();
 		
-		writeRepository.save(write);
+		log.info(writeRepository.save(write).toString());
 		
 	}
 	
@@ -80,17 +81,13 @@ public class WriteRepositoryTests {
 				.builder()
 				.board(boardRepository.findAll().get(0))
 				.member(memberRepository.findAll().get(0))
-				.createdDate(new Date())
-				.updatedDate(new Date())
 				.build();
 		
 		writeRepository.save(write);
 		
-		Optional<Write> get = writeRepository.findByWriteID(write.getWriteID());
+		List<Write> get = writeRepository.findByMember(memberRepository.findAll().get(0));
 		
-		assertEquals(0, 0);
-		
-		assertEquals(write, get.get());
+		assertEquals(write, get.get(0));
 		
 	}
 	

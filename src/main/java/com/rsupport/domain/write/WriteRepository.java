@@ -5,12 +5,15 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.rsupport.domain.board.Board;
 import com.rsupport.domain.member.Member;
 
 public interface WriteRepository extends JpaRepository<Write, Long> {
 	
+	List<Write> findByMember(Member member);
+	
 	Optional<Write> findByWriteID(Long writeID);
 	
-	List<Write> findByMember(Member member);
+	Optional<Write> findByBoard(Board board);
 
 }

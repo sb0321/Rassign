@@ -45,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
 	public void saveMember(MemberDTO newMember) {
 		// TODO Auto-generated method stub
 		
-		// 비밀번호 암호화
+		// 鍮꾨�踰덊샇 �븫�샇�솕
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         
 		String encryptedPassword = passwordEncoder.encode(newMember.getPassword());
@@ -79,7 +79,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		Member member = optionalMember.get();
 		
-		// 닉네임이 같다면 pw를 바꾼다.
+		// �땳�꽕�엫�씠 媛숇떎硫� pw瑜� 諛붽씔�떎.
 		if(member.getNickname().equals(update.getNickname())) {
 			member.updatePassword(update.getPassword());
 		} else if(member.getPassword().equals(update.getPassword())){
@@ -105,6 +105,7 @@ public class MemberServiceImpl implements MemberService {
 					.memberID(member.getMemberID())
 					.password(member.getPassword())
 					.nickname(member.getNickname())
+					.writes(member.getWrites())
 					.build();
 			
 			result.add(dto);

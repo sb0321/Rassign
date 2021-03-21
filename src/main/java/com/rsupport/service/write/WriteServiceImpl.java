@@ -66,7 +66,21 @@ public class WriteServiceImpl implements WriteService {
 	}
 
 	@Override
-	public WriteDTO findByWriteID(Long writeID) {
+	@Transactional
+	public Write saveWrite(Member member, Board board) {
+		// TODO Auto-generated method stub
+		
+		Write write = Write
+				.builder()
+				.board(board)
+				.member(member)
+				.build();
+		
+		return writeRepository.save(write);
+	}
+
+	@Override
+	public Write findByWriteID(Long writeID) {
 		// TODO Auto-generated method stub
 		
 		Optional<Write> optionalWrite = writeRepository.findByWriteID(writeID);
@@ -75,46 +89,19 @@ public class WriteServiceImpl implements WriteService {
 			return null;
 		}
 		
-		Write write = optionalWrite.get();
-		
-		MemberDTO memberDTO = MemberDTO
-				.builder()
-				.memberID(write.getMember().getMemberID())
-				.nickname(write.getMember().getNickname())
-				.password(write.getMember().getPassword())
-				.build();
-		
-		BoardDTO boardDTO = BoardDTO
-				.builder()
-				.boardID(write.getBoard().getBoardID())
-				.title(write.getBoard().getTitle())
-				.content(write.getBoard().getContent())
-				.build();
-		
-		return WriteDTO
-				.builder()
-				.writeID(writeID)
-				.board(boardDTO)
-				.member(memberDTO)
-				.createdDate(write.getCreatedDate())
-				.updatedDate(write.getUpdatedDate())
-				.build();
+		return optionalWrite.get();
 	}
 
 	@Override
-	@Transactional
-	public Long saveWrite(Member member, Board board) {
+	public Write findByBoard(Board board) {
 		// TODO Auto-generated method stub
+		Optional<Write> optionalWrite = writeRepository.findByBoard(board);
 		
-		Write write = Write
-				.builder()
-				.board(board)
-				.member(member)
-				.createdDate(new Date())
-				.updatedDate(new Date())
-				.build();
+		if(optionalWrite.isEmpty()) {
+			return null;
+		}
 		
-		return writeRepository.save(write).getWriteID();
+		return optionalWrite.get();
 	}
 	
 

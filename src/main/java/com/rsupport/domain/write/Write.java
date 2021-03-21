@@ -1,6 +1,7 @@
 package com.rsupport.domain.write;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.rsupport.domain.board.Board;
 import com.rsupport.domain.member.Member;
@@ -33,22 +35,20 @@ public class Write {
 	@JoinColumn(name = "memberID")
 	private Member member;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "boardID")
 	private Board board;
 	
 	@Column(name = "createdDate")
-	private Date createdDate;
+	private Date createdDate = new Date();
 	
 	@Column(name = "updatedDate")
-	private Date updatedDate;
+	private Date updatedDate = new Date();
 
 	@Builder
-	public Write(Member member, Board board, Date createdDate, Date updatedDate) {
+	public Write(Member member, Board board) {
 		this.member = member;
 		this.board = board;
-		this.createdDate = createdDate;
-		this.updatedDate = updatedDate;
 	}
 	
 	

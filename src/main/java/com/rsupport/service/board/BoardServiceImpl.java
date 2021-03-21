@@ -13,6 +13,12 @@ import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardDTO;
 import com.rsupport.domain.board.BoardRepository;
 import com.rsupport.domain.board.BoardVO;
+import com.rsupport.domain.member.Member;
+import com.rsupport.domain.member.MemberDTO;
+import com.rsupport.domain.member.MemberRepository;
+import com.rsupport.domain.write.Write;
+import com.rsupport.service.member.MemberService;
+import com.rsupport.service.write.WriteService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,21 +31,22 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardVO> findAllVOList() {
 		
-		List<Board> boardList = boardRepository.findAll();
-		
 		List<BoardVO> result = new ArrayList<>();
 		
-		for(Board board : boardList) {
+		List<Board> list = boardRepository.findAll();
+		
+		for(Board b : list) {
 			
 			BoardVO vo = BoardVO
 					.builder()
-					.memberID(board.getWrite().getMember().getMemberID())
-					.title(board.getTitle())
-					.updatedDate(board.getWrite().getUpdatedDate())
-					.boardID(board.getBoardID())
+					.boardID(b.getBoardID())
+					.memberID(b.getWrite().getMember().getMemberID())
+					.title(b.getTitle())
+					.updatedDate(b.getWrite().getUpdatedDate())
 					.build();
 			
 			result.add(vo);
+			
 		}
 		
 		return result;
@@ -89,7 +96,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	@Transactional
-	public Long saveBoard(BoardDTO newBoard) {
+	public Board saveBoard(BoardDTO newBoard) {
 		// TODO Auto-generated method stub
 		
 		Board board = Board
@@ -98,7 +105,7 @@ public class BoardServiceImpl implements BoardService {
 				.content(newBoard.getContent())
 				.build();
 		
-		return boardRepository.save(board).getBoardID();
+		return boardRepository.save(board);
 		
 	}
 

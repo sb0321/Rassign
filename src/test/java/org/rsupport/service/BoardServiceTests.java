@@ -2,6 +2,9 @@ package org.rsupport.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.junit.Before;
@@ -17,6 +20,11 @@ import com.rsupport.config.ServletConfig;
 import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardDTO;
 import com.rsupport.domain.board.BoardRepository;
+import com.rsupport.domain.board.BoardVO;
+import com.rsupport.domain.member.Member;
+import com.rsupport.domain.member.MemberRepository;
+import com.rsupport.domain.write.Write;
+import com.rsupport.domain.write.WriteRepository;
 import com.rsupport.service.board.BoardService;
 
 import lombok.extern.log4j.Log4j;
@@ -33,10 +41,16 @@ public class BoardServiceTests {
 	@Autowired
 	private BoardRepository boardRepository;
 	
+	@Autowired
+	private MemberRepository memberRepository;
+	
+	@Autowired
+	private WriteRepository writeRepository;
+	
 	@Before
 	public void init() {
 		
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 1; i++) {
 			
 			Board board = Board
 					.builder()
@@ -53,7 +67,7 @@ public class BoardServiceTests {
 		
 		int boardCount = boardRepository.findAll().size();
 		
-		assertEquals(10, boardCount);
+		assertEquals(1, boardCount);
 	}
 	
 	@Test
@@ -97,7 +111,7 @@ public class BoardServiceTests {
 				.content("testContent")
 				.build();
 		
-		Long boardID = boardService.saveBoard(dto);
+		Long boardID = boardService.saveBoard(dto).getBoardID();
 		
 		assertEquals(dto.getTitle(), boardRepository.findByBoardID(boardID).get().getTitle());
 		
@@ -140,7 +154,7 @@ public class BoardServiceTests {
 	
 	@Test
 	@Transactional
-	public void testDeleteBord() {
+	public void testDeleteBoard() {
 		
 		Board board = Board
 				.builder()
@@ -151,6 +165,39 @@ public class BoardServiceTests {
 		Long boardID = boardRepository.save(board).getBoardID();
 		
 		assertEquals(new Long(1), boardService.deleteBoard(boardID));
+	}
+	
+	@Test
+	@Transactional
+	public void testfindAllVOList() {
+		
+		boardRepository.deleteAll();
+		
+		Member member = Member
+				.builder()
+				.memberID("testID")
+				.nickname("nickname")
+				.password("password")
+				.build();
+		
+		Member m = memberRepository.save(member);
+		
+		Board board = Board
+				.builder()
+				.title("testTitle")
+				.content("testContent")
+				.build();
+		
+		Board ba = boardRepository.save(board);
+		
+		Write w = writeRepository.save(Write.builder().board(ba).member(m).build());
+		
+		m.addWrite(w);
+		System.out.println(ba.toString() + " before");
+		List<BoardVO> list = boardService.findAllVOList();
+
+		System.out.println(list.toString());
+		assertEquals(ba, m.getWrites().get(0).getBoard());
 	}
 
 }

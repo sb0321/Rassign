@@ -1,5 +1,6 @@
 package com.rsupport.domain.member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -31,7 +32,11 @@ public class Member {
 	private String nickname;
 	
 	@OneToMany(mappedBy = "member")
-	private List<Write> writes;
+	private List<Write> writes = new ArrayList<>();
+	
+	public void addWrite(Write write) {
+		writes.add(write);
+	}
 
 	@Builder
 	public Member(String memberID, String password, String nickname) {

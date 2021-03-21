@@ -4,8 +4,10 @@ import java.util.Date;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class BoardVO {
 
 	private Long boardID;

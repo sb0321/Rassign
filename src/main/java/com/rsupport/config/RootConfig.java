@@ -48,7 +48,7 @@ public class RootConfig {
 		Properties properties = new Properties();
 		properties.setProperty(Environment.DIALECT, "org.hibernate.dialect.H2Dialect");
 		properties.setProperty(Environment.SHOW_SQL, "true");
-		properties.setProperty(Environment.HBM2DDL_AUTO, "validate");
+		properties.setProperty(Environment.HBM2DDL_AUTO, "valid");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -70,7 +70,7 @@ public class RootConfig {
     }
     
     @Bean
-    // 한글 설정
+    // �븳湲� �꽕�젙
     public CharacterEncodingFilter characterEncodingFilter() {
     	CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
