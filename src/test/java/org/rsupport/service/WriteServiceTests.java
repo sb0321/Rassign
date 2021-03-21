@@ -2,7 +2,6 @@ package org.rsupport.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -19,7 +18,6 @@ import com.rsupport.config.RootConfig;
 import com.rsupport.config.ServletConfig;
 import com.rsupport.domain.board.Board;
 import com.rsupport.domain.board.BoardRepository;
-import com.rsupport.domain.board.BoardVO;
 import com.rsupport.domain.member.Member;
 import com.rsupport.domain.member.MemberRepository;
 import com.rsupport.domain.write.Write;
@@ -117,8 +115,11 @@ public class WriteServiceTests {
 		Member member = memberRepository.findAll().get(0);
 		Board board = boardRepository.findAll().get(0);
 		
-		Write write = writeService.saveWrite(member.getMemberID(), board.getBoardID());
+		Write write = writeService.saveWrite(member, board);
 
+		assertEquals(member, write.getMember());
+		assertEquals(board, write.getBoard());
+		
 		assertEquals(board, memberRepository.findAll().get(0).getWrites().get(0).getBoard());
 		assertEquals(member, boardRepository.findAll().get(0).getWrite().getMember());
 	}
@@ -130,10 +131,7 @@ public class WriteServiceTests {
 		Board board = boardRepository.findAll().get(0);
 		Member member = memberRepository.findAll().get(0);
 		
-		Write w = writeRepository.save(Write.builder().board(board).member(member).build());
-		
-		member.addWrite(w);
-		board.setWrite(w);
+		writeService.saveWrite(member, board);
 		
 		assertEquals(member, board.getWrite().getMember());
 		assertEquals(board, member.getWrites().get(0).getBoard());

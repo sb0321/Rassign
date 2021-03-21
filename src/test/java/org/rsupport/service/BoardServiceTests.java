@@ -63,6 +63,7 @@ public class BoardServiceTests {
 	}
 	
 	@Test
+	@Transactional
 	public void testGetBoardDetail() {
 		
 		Board board = Board
@@ -82,7 +83,12 @@ public class BoardServiceTests {
 		
 		Member m = memberRepository.save(member);
 		
+		log.info(m);
+		
 		Write w = writeRepository.save(Write.builder().board(b).member(m).build());
+		
+		m.addWrite(w);
+		b.setWrite(w);
 		
 		BoardDetailVO boardDetailVO = boardService.getBoardDetail(b.getBoardID());
 		
@@ -226,7 +232,6 @@ public class BoardServiceTests {
 		
 		List<BoardVO> list = boardService.findAllVOList();
 		
-		log.info(list);
 	}
 
 }

@@ -41,8 +41,6 @@ public class BoardController {
 		
 		BoardDetailVO board = boardService.getBoardDetail(boardID);
 		
-		System.out.println(board.getFiles().toString());
-		
 		model.addAttribute("board", board);
 		
 		return "board/boardDetail";

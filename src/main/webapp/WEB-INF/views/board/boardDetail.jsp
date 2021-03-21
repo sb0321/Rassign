@@ -16,12 +16,6 @@
 	<p>${board.createdDate}</p>
 	<label>최종 업데이트 날짜</label>
 	<p>${board.updatedDate}</p>
-	<label>첨부 파일</label>
-	<div>
-		<c:forEach var="file" items="${board.files}">
-			<a href="/download?fileID=${file.fileID}">${file.originalName}</a>
-		</c:forEach>
-	</div>
 	<br><br>
 	<label>내용</label>
 	<textarea rows="5" cols="33" readonly="readonly">${board.content}</textarea>

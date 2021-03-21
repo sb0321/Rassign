@@ -97,7 +97,6 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	@Transactional
 	public Board saveBoard(BoardDTO newBoard) {
 		// TODO Auto-generated method stub
 		
@@ -152,23 +151,6 @@ public class BoardServiceImpl implements BoardService {
 		
 		Member member = write.getMember();
 		
-		List<Save> saveList = board.getSaves();
-		
-		List<FileVO> voList = new ArrayList<>();
-		for(Save save : saveList) {
-			
-			File file = save.getFile();
-			
-			FileVO vo = FileVO
-					.builder()
-					.originalName(file.getOriginalName())
-					.UUID(file.getUUID())
-					.fileID(file.getFileID())
-					.build();
-			
-			voList.add(vo);
-		}
-		System.out.println("222222");
 		BoardDetailVO vo = BoardDetailVO
 				.builder()
 				.boardID(boardID)
@@ -176,7 +158,6 @@ public class BoardServiceImpl implements BoardService {
 				.updatedDate(write.getUpdatedDate())
 				.createdDate(write.getCreatedDate())
 				.content(board.getContent())
-				.files(voList)
 				.title(board.getTitle())
 				.build();
 		

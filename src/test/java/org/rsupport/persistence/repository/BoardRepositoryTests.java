@@ -2,6 +2,7 @@ package org.rsupport.persistence.repository;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -27,6 +28,25 @@ public class BoardRepositoryTests {
 	@Autowired
 	private BoardRepository boardRepository;
 	
+	@Test
+	public void testFindAll() {
+		
+		for(int i = 0; i < 10; i++) {
+			Board board = Board
+					.builder()
+					.title("testTitle" + i)
+					.content("board content" + i)
+					.build();
+			
+			boardRepository.save(board);
+		}
+		
+		List<Board> boardList = boardRepository.findAll();
+		
+		for(Board b : boardList) {
+			log.info(b);
+		}
+	}
 	
 	@Test
 	public void testInsertBoard() {

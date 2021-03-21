@@ -73,11 +73,8 @@ public class WriteServiceImpl implements WriteService {
 
 	@Override
 	@Transactional
-	public Write saveWrite(String memberID, Long boardID) {
+	public Write saveWrite(Member member, Board board) {
 		// TODO Auto-generated method stub
-		
-		Member member = memberService.findByMemberIDEntity(memberID);
-		Board board = boardService.findByBoardIDEntity(boardID);
 		
 		Write write = Write
 				.builder()
@@ -87,8 +84,8 @@ public class WriteServiceImpl implements WriteService {
 		
 		Write result = writeRepository.save(write);
 		
-		member.addWrite(result);
 		board.setWrite(result);
+		member.addWrite(result);
 		
 		return result;
 	}

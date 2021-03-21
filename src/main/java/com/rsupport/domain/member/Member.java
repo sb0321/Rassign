@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.rsupport.domain.write.Write;
@@ -31,7 +32,9 @@ public class Member {
 	@Column(name = "nickname")
 	private String nickname;
 	
-	@OneToMany(mappedBy = "member")
+//	@OneToMany(mappedBy = "member")
+	@OneToMany
+	@JoinColumn(name = "memberID")
 	private List<Write> writes = new ArrayList<>();
 	
 	public void addWrite(Write write) {

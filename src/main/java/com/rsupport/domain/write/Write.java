@@ -34,7 +34,7 @@ public class Write {
 	@JoinColumn(name = "memberID")
 	private Member member;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "boardID")
 	private Board board;
 	
